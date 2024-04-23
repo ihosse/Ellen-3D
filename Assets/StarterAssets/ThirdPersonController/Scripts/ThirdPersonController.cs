@@ -69,8 +69,8 @@ namespace StarterAssets
         public float CameraAngleOverride = 0.0f;
 
         [Tooltip("For locking the camera position on all axis")]
-        public bool LockCameraPosition = false;
 
+        public bool LockCameraPosition = false;
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -160,6 +160,11 @@ namespace StarterAssets
         private void LateUpdate()
         {
             CameraRotation();
+        }
+
+        public void Stop()
+        {
+            _speed = 0;
         }
 
         private void AssignAnimationIDs()
