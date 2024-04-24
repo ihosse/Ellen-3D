@@ -20,7 +20,7 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
-        public bool IsControllable { get; set; }
+		private bool isControllable;
 
 #if ENABLE_INPUT_SYSTEM
         public void OnMove(InputValue value)
@@ -47,9 +47,22 @@ namespace StarterAssets
 		}
 #endif
 
+		public void StopMovement(bool canMove)
+		{
+			if(canMove)
+			{
+				isControllable = true;
+			}
+			else
+			{
+				isControllable = false;
+				move = Vector2.zero;
+			}
+		}
+
 		public void MoveInput(Vector2 newMoveDirection)
 		{
-			if (!IsControllable)
+			if (!isControllable)
 			{
                 move = Vector2.zero;
                 return;
@@ -60,7 +73,7 @@ namespace StarterAssets
 
 		public void LookInput(Vector2 newLookDirection)
 		{
-            if (!IsControllable)
+            if (!isControllable)
                 return;
             
 			look = newLookDirection;
@@ -68,7 +81,7 @@ namespace StarterAssets
 
 		public void JumpInput(bool newJumpState)
 		{
-            if (!IsControllable)
+            if (!isControllable)
                 return;
             
 			jump = newJumpState;
@@ -76,7 +89,7 @@ namespace StarterAssets
 
 		public void SprintInput(bool newSprintState)
 		{
-            if (!IsControllable)
+            if (!isControllable)
                 return;
             
 			sprint = newSprintState;

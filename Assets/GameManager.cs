@@ -1,3 +1,4 @@
+using Cinemachine;
 using StarterAssets;
 using System;
 using System.Collections;
@@ -13,37 +14,38 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayableDirector playableDirector;
 
+    [SerializeField]
+    private CinemachineVirtualCamera playerVirtualCamera;
+
     [Header("GamePlay")]
     [SerializeField]
     private StarterAssetsInputs playerInputManager;
 
     [SerializeField]
-    private ThirdPersonController thirdPersonController;
-
-    [SerializeField]
     private Door door;
 
     [SerializeField]
-    private EmissiveColorChanger doorEmissiveColorChanger;
+    private MaterialChanger doorEmissiveColorChanger;
 
     [SerializeField]
     private PressurePad pressurePad;
 
     [SerializeField]
-    private EmissiveColorChanger padEmissiveColorChanger;
+    private MaterialChanger padEmissiveColorChanger;
 
 
     private void Start()
     {
         playableDirector.stopped += OnStartCutsceneFinished;
-        playerInputManager.IsControllable = false;
+        playerInputManager.StopMovement(false);
 
+        playerVirtualCamera.MoveToTopOfPrioritySubqueue();
 
         door.IsBlocked = true;
-        doorEmissiveColorChanger.DisabledColor();
+        doorEmissiveColorChanger.ChangeToDisabledMaterial();
 
         pressurePad.IsBlocked = true;
-        padEmissiveColorChanger.DisabledColor();
+        padEmissiveColorChanger.ChangeToDisabledMaterial();
     }
 
     private void OnDestroy()
@@ -54,16 +56,15 @@ public class GameManager : MonoBehaviour
     public void OnKeyCollected()
     {
         door.IsBlocked = false;
-        doorEmissiveColorChanger.EnabledColor();
+        doorEmissiveColorChanger.ChangeToEnabledMaterial();
 
         pressurePad.IsBlocked = false;
-        padEmissiveColorChanger.EnabledColor();
+        padEmissiveColorChanger.ChangeToEnabledMaterial();
     }
     public void OnPadActivated()
     {
         door.Open();
-        playerInputManager.IsControllable = false;
-        thirdPersonController.Stop();
+        playerInputManager.StopMovement(false);
 
         StartCoroutine(TimedPlayerInputRecovery());
     }
@@ -71,7 +72,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator TimedPlayerInputRecovery()
     {
         yield return new WaitForSeconds(7);
-        playerInputManager.IsControllable = true;
+        playerInputManager.StopMovement(true);
     }
 
     private void OnStartCutsceneFinished(PlayableDirector director)
@@ -79,7 +80,7 @@ public class GameManager : MonoBehaviour
         if(playableDirector = director)
         {
             audioManager.SnapshotTransitionTo(audioManager.GamePlay, 1);
-            playerInputManager.IsControllable = true;
+            playerInputManager.StopMovement(true);
         }
     }
 
