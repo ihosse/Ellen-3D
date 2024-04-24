@@ -11,7 +11,7 @@ public class MaterialChanger : MonoBehaviour
 
     private new Renderer renderer;
 
-    private void Start()
+    private void Awake()
     {
         renderer = GetComponent<Renderer>();
     }
