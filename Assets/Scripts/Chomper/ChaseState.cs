@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class ChaseState: IState
+public class ChaseState : IState
 {
     private Chomper chomper;
 
@@ -12,16 +12,40 @@ public class ChaseState: IState
 
     public void Enter()
     {
-        Debug.Log("enter");
+        chomper.NavMeshAgent.speed = chomper.ChaseSpeed;
     }
 
     public void Exit()
     {
-        Debug.Log("Exit");
     }
 
     public void Update()
     {
-        Debug.Log("Update");
+        if (CheckIfTargetIsOutOfRange())
+        {
+            chomper.StateMachine.TransitionTo(chomper.StateMachine.PatrolState);
+            return;
+        }
+
+        chomper.Animator.SetFloat("Speed", chomper.NavMeshAgent.velocity.magnitude);
+
+        Vector3 targetPosition = chomper.PlayerTarget.position;
+        chomper.NavMeshAgent.SetDestination(targetPosition);
+    }
+
+    private bool CheckIfTargetIsOutOfRange()
+    {
+        bool targetIsOutOfRange = false;
+
+        Vector3 playerPosition = chomper.PlayerTarget.position;
+        Vector3 chomperPosition = chomper.transform.position;
+        float outOfRangeDistance = chomper.MaxSightRange;
+
+        if (Vector3.Distance(playerPosition, chomperPosition) >= outOfRangeDistance)
+        {
+            targetIsOutOfRange = true;
+        }
+
+        return targetIsOutOfRange;
     }
 }

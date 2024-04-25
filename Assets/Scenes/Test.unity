@@ -2512,9 +2512,24 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2841646773108432638, guid: cbbcf6e267045b043ae0a5d0debc8280,
         type: 3}
+      propertyPath: <ChaseSpeed>k__BackingField
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841646773108432638, guid: cbbcf6e267045b043ae0a5d0debc8280,
+        type: 3}
       propertyPath: <PlayerTarget>k__BackingField
       value: 
       objectReference: {fileID: 458000992}
+    - target: {fileID: 2841646773108432638, guid: cbbcf6e267045b043ae0a5d0debc8280,
+        type: 3}
+      propertyPath: <MaxSightRange>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2841646773108432638, guid: cbbcf6e267045b043ae0a5d0debc8280,
+        type: 3}
+      propertyPath: <SightDistance>k__BackingField
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2841646773108432638, guid: cbbcf6e267045b043ae0a5d0debc8280,
         type: 3}
       propertyPath: <PatrolDestinations>k__BackingField.Array.size
@@ -2543,7 +2558,7 @@ PrefabInstance:
     - target: {fileID: 3074657719725199962, guid: cbbcf6e267045b043ae0a5d0debc8280,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.49
+      value: 9.66
       objectReference: {fileID: 0}
     - target: {fileID: 3074657719725199962, guid: cbbcf6e267045b043ae0a5d0debc8280,
         type: 3}
@@ -2553,7 +2568,7 @@ PrefabInstance:
     - target: {fileID: 3074657719725199962, guid: cbbcf6e267045b043ae0a5d0debc8280,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.8
+      value: -4.03
       objectReference: {fileID: 0}
     - target: {fileID: 3074657719725199962, guid: cbbcf6e267045b043ae0a5d0debc8280,
         type: 3}
@@ -2595,6 +2610,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chomper
       objectReference: {fileID: 0}
+    - target: {fileID: 3074657719734828472, guid: cbbcf6e267045b043ae0a5d0debc8280,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b109c91fc69a8924692eaa6483e8162f, type: 2}
     - target: {fileID: 8341131209627746139, guid: cbbcf6e267045b043ae0a5d0debc8280,
         type: 3}
       propertyPath: m_Enabled

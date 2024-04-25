@@ -1,8 +1,7 @@
-﻿using System;
-using Unity.VisualScripting.FullSerializer;
+﻿using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class PatrolState: IState
+public class PatrolState : IState
 {
     private Chomper chomper;
     private int currentDestination;
@@ -11,21 +10,31 @@ public class PatrolState: IState
     public PatrolState(Chomper chomper)
     {
         this.chomper = chomper;
-    }
 
-    public void Enter()
-    {
         currentDestination = 0;
         destinationLenght = chomper.PatrolDestinations.Length;
     }
 
+    public void Enter()
+    {
+        chomper.NavMeshAgent.speed = chomper.WalkSpeed;
+        
+    }
+
     public void Exit()
     {
-        
+
     }
 
     public void Update()
     {
+        if (CheckIfPlayerIsInSight())
+        {
+            chomper.StateMachine.TransitionTo(chomper.StateMachine.ChaseState);
+            return;
+        }
+
+
         if (CheckIfReachedDestination())
         {
             currentDestination++;
@@ -35,8 +44,25 @@ public class PatrolState: IState
         }
 
         Vector3 targetPosition = chomper.PatrolDestinations[currentDestination].position;
-
         chomper.NavMeshAgent.SetDestination(targetPosition);
+
+        chomper.Animator.SetFloat("Speed", chomper.NavMeshAgent.velocity.magnitude);
+    }
+
+    private bool CheckIfPlayerIsInSight()
+    {
+        bool playerInSight = false;
+
+        Vector3 playerPosition = chomper.PlayerTarget.position;
+        Vector3 chomperPosition = chomper.transform.position;
+        float sightDistance = chomper.SightDistance;
+
+        if (Vector3.Distance(playerPosition, chomperPosition) < sightDistance)
+        {
+            playerInSight = true;
+        }
+
+        return playerInSight;
     }
 
     private bool CheckIfReachedDestination()

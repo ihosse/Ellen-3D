@@ -2,13 +2,14 @@
 {
     public IState CurrentState { get; private set; }
 
-    public PatrolState patrolState { get; private set; }
-    //public ChaseState chaseState;
+    public PatrolState PatrolState { get; private set; }
+    public ChaseState ChaseState { get; private set; }
     //public HitState hitState;
 
     public StateMachine(Chomper chomper)
     {
-        this.patrolState = new PatrolState(chomper);
+        this.PatrolState = new PatrolState(chomper);
+        this.ChaseState = new ChaseState(chomper);
     }
 
     public void Initialize(IState startingState)
