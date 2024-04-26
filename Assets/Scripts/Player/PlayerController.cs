@@ -8,9 +8,8 @@ public class PlayerController : MonoBehaviour
     private PlayerSound playerSound;
     private PlayerAnimations playerAnimations;
 
-    private void Start()
+    private void Awake()
     {
-
         thirdPersonController = GetComponent<ThirdPersonController>();
         playerAttack = GetComponent<PlayerAttack>();
         playerAnimations  = GetComponent<PlayerAnimations>();

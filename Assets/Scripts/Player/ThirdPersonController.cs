@@ -99,6 +99,9 @@ namespace StarterAssets
 
         private const float _threshold = 0.01f;
         private bool _hasAnimator;
+        private bool _disableMovement;
+
+        private Vector2 _lastMoveValue;
 
         private bool IsCurrentDeviceMouse
         {
@@ -120,6 +123,12 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+
+#if ENABLE_INPUT_SYSTEM
+            _playerInput = GetComponent<PlayerInput>();
+#else
+			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
+#endif
         }
 
         public void Initialize(PlayerAnimations playerAnimations)
@@ -135,14 +144,10 @@ namespace StarterAssets
             }
 
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
-#if ENABLE_INPUT_SYSTEM 
-            _playerInput = GetComponent<PlayerInput>();
-#else
-			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
-#endif
+
 
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
@@ -159,9 +164,44 @@ namespace StarterAssets
             _playerAnimations.Animator.SetTrigger(_playerAnimations.AnimIDHit);
         }
 
-        public void Stop()
+        public void DisableMovementControl(bool disable)
         {
-            _speed = 0;
+            if (_input == null)
+                _input = GetComponent<StarterAssetsInputs>();
+
+            _disableMovement = disable;
+
+            if (_disableMovement)
+            {
+                _lastMoveValue = _input.move;
+                _speed = 0;
+            }
+            else
+            {
+                _input.move = _lastMoveValue;
+            }
+        }
+
+        public void StopMovementForSeconds(float seconds)
+        {
+            DisableMovementControl(false);
+            StartCoroutine(WaitAndEnableMovement(seconds));
+        }
+
+        private IEnumerator WaitAndEnableMovement(float seconds)
+        {
+            yield return new WaitForSecondsRealtime(.15f);
+            Time.timeScale = 0f;
+            yield return new WaitForSecondsRealtime(.25f);
+            Time.timeScale = 1f;
+            yield return new WaitForSecondsRealtime(seconds);
+            DisableMovementControl(true);
+        }
+
+        private void SetMovementInputsToDefault()
+        {
+            _input.move = Vector2.zero;
+            _input.jump = false;
         }
 
         public void GroundedCheck()
@@ -202,6 +242,9 @@ namespace StarterAssets
 
         public void Move()
         {
+            if (_disableMovement)
+                SetMovementInputsToDefault();
+
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -270,6 +313,9 @@ namespace StarterAssets
 
         public void JumpAndGravity()
         {
+            if (_disableMovement)
+                SetMovementInputsToDefault();
+
             if (Grounded)
             {
                 // reset the fall timeout timer

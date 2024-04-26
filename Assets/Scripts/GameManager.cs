@@ -1,6 +1,5 @@
 using Cinemachine;
 using StarterAssets;
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -19,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     [Header("GamePlay")]
     [SerializeField]
-    private StarterAssetsInputs playerInputManager;
+    private ThirdPersonController thirdPersonController;
 
     [SerializeField]
     private Door door;
@@ -33,11 +32,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private MaterialChanger padEmissiveColorChanger;
 
-
     private void Start()
     {
         playableDirector.stopped += OnStartCutsceneFinished;
-        playerInputManager.EnableMovement(false);
+        thirdPersonController.DisableMovementControl(true);
 
         playerVirtualCamera.MoveToTopOfPrioritySubqueue();
 
@@ -64,7 +62,7 @@ public class GameManager : MonoBehaviour
     public void OnPadActivated()
     {
         door.Open();
-        playerInputManager.EnableMovement(false);
+        thirdPersonController.DisableMovementControl(true);
 
         StartCoroutine(TimedPlayerInputRecovery());
     }
@@ -72,7 +70,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator TimedPlayerInputRecovery()
     {
         yield return new WaitForSeconds(7);
-        playerInputManager.EnableMovement(true);
+        thirdPersonController.DisableMovementControl(false);
     }
 
     private void OnStartCutsceneFinished(PlayableDirector director)
@@ -80,7 +78,7 @@ public class GameManager : MonoBehaviour
         if(playableDirector = director)
         {
             audioManager.SnapshotTransitionTo(audioManager.GamePlay, 1);
-            playerInputManager.EnableMovement(true);
+            thirdPersonController.DisableMovementControl(false);
         }
     }
 

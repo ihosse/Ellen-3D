@@ -39,6 +39,8 @@ public class PlayerAttack : MonoBehaviour
             }
 
             isAttacking = true;
+            _thirdPersonController.DisableMovementControl(true);
+
             StartCoroutine(WaitToAttackAnimationEnd());
         }
     }
@@ -46,6 +48,7 @@ public class PlayerAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         isAttacking = false;
+        _thirdPersonController.DisableMovementControl(false);
     }
 
     public void MeleeAttackStart() { }
