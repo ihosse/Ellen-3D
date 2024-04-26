@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         playableDirector.stopped += OnStartCutsceneFinished;
-        playerInputManager.StopMovement(false);
+        playerInputManager.EnableMovement(false);
 
         playerVirtualCamera.MoveToTopOfPrioritySubqueue();
 
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     public void OnPadActivated()
     {
         door.Open();
-        playerInputManager.StopMovement(false);
+        playerInputManager.EnableMovement(false);
 
         StartCoroutine(TimedPlayerInputRecovery());
     }
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator TimedPlayerInputRecovery()
     {
         yield return new WaitForSeconds(7);
-        playerInputManager.StopMovement(true);
+        playerInputManager.EnableMovement(true);
     }
 
     private void OnStartCutsceneFinished(PlayableDirector director)
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         if(playableDirector = director)
         {
             audioManager.SnapshotTransitionTo(audioManager.GamePlay, 1);
-            playerInputManager.StopMovement(true);
+            playerInputManager.EnableMovement(true);
         }
     }
 

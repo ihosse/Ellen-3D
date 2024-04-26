@@ -3,6 +3,8 @@
 public class AttackState : IState
 {
     private Chomper chomper;
+    private float AttackAnimationTime = .8f;
+    private float startTime;
 
     public AttackState(Chomper chomper)
     {
@@ -11,16 +13,33 @@ public class AttackState : IState
 
     public void Enter()
     {
-        Debug.Log("enter");
+        chomper.NavMeshAgent.speed = 0;
+        chomper.transform.LookAt(chomper.PlayerTarget.transform.position);
+        startTime = Time.time;
     }
 
     public void Exit()
     {
-        Debug.Log("Exit");
+
     }
 
     public void Update()
     {
-        Debug.Log("Update");
+        if (CheckIfAttackAnimationEnded())
+        {
+            chomper.Animator.SetBool("Attack", false);
+            chomper.StateMachine.TransitionTo(chomper.StateMachine.IdleState);
+            return;
+        }
+
+        chomper.Animator.SetBool("Attack", true);
+    }
+
+    private bool CheckIfAttackAnimationEnded()
+    {
+        if (startTime + AttackAnimationTime > Time.time)
+            return false;
+        else
+            return true;
     }
 }

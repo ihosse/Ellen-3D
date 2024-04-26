@@ -1,4 +1,6 @@
-﻿ using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -93,6 +95,8 @@ namespace StarterAssets
         private int _animIDJump;
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
+        private int _animIDHit;
+        private int _animIDAttack;
 
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
@@ -105,6 +109,7 @@ namespace StarterAssets
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
+        private bool isAttacking;
 
         private bool IsCurrentDeviceMouse
         {
@@ -155,6 +160,7 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            Attack();
         }
 
         private void LateUpdate()
@@ -162,9 +168,34 @@ namespace StarterAssets
             CameraRotation();
         }
 
+        public void Hit()
+        {
+            _animator.SetTrigger(_animIDHit);
+        }
+
         public void Stop()
         {
             _speed = 0;
+        }
+
+        private void Attack()
+        {
+            if (_input.attack && !isAttacking)
+            {
+                if (_hasAnimator)
+                {
+                    _animator.SetBool(_animIDAttack, true);
+                }
+
+                isAttacking = true;
+                StartCoroutine(WaitToAttackAnimationEnd());
+            }
+        }
+
+        private IEnumerator WaitToAttackAnimationEnd()
+        {
+            yield return new WaitForSeconds(1);
+            isAttacking = false;
         }
 
         private void AssignAnimationIDs()
@@ -174,6 +205,8 @@ namespace StarterAssets
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+            _animIDHit = Animator.StringToHash("Hit");
+            _animIDAttack = Animator.StringToHash("Attack");
         }
 
         private void GroundedCheck()
@@ -370,6 +403,11 @@ namespace StarterAssets
                 GroundedRadius);
         }
 
-        
+        public void MeleeAttackStart() { }
+        public void MeleeAttackEnd() 
+        {
+            _animator.SetBool(_animIDAttack, false);
+            _input.attack = false;
+        }
     }
 }
