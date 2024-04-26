@@ -18,7 +18,7 @@ public class Chomper : MonoBehaviour
     public NavMeshAgent NavMeshAgent { get; private set; }
     public StateMachine StateMachine { get; private set; }
 
-    private Collider collider;
+    private new Collider collider;
 
     private void Awake()
     {

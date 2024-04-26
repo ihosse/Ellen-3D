@@ -89,27 +89,16 @@ namespace StarterAssets
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
 
-        // animation IDs
-        private int _animIDSpeed;
-        private int _animIDGrounded;
-        private int _animIDJump;
-        private int _animIDFreeFall;
-        private int _animIDMotionSpeed;
-        private int _animIDHit;
-        private int _animIDAttack;
-
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
-        private Animator _animator;
+        private PlayerAnimations _playerAnimations;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
 
         private const float _threshold = 0.01f;
-
         private bool _hasAnimator;
-        private bool isAttacking;
 
         private bool IsCurrentDeviceMouse
         {
@@ -133,11 +122,20 @@ namespace StarterAssets
             }
         }
 
-        private void Start()
+        public void Initialize(PlayerAnimations playerAnimations)
         {
+            if (playerAnimations != null)
+            {
+                _playerAnimations = playerAnimations;
+                _hasAnimator = true;
+            }
+            else
+            {
+                _hasAnimator = false;
+            }
+
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             
-            _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM 
@@ -145,8 +143,6 @@ namespace StarterAssets
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
-
-            AssignAnimationIDs();
 
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
@@ -160,43 +156,12 @@ namespace StarterAssets
 
         public void Hit()
         {
-            _animator.SetTrigger(_animIDHit);
+            _playerAnimations.Animator.SetTrigger(_playerAnimations.AnimIDHit);
         }
 
         public void Stop()
         {
             _speed = 0;
-        }
-
-        private void Attack()
-        {
-            if (_input.attack && !isAttacking)
-            {
-                if (_hasAnimator)
-                {
-                    _animator.SetBool(_animIDAttack, true);
-                }
-
-                isAttacking = true;
-                StartCoroutine(WaitToAttackAnimationEnd());
-            }
-        }
-
-        private IEnumerator WaitToAttackAnimationEnd()
-        {
-            yield return new WaitForSeconds(1);
-            isAttacking = false;
-        }
-
-        private void AssignAnimationIDs()
-        {
-            _animIDSpeed = Animator.StringToHash("Speed");
-            _animIDGrounded = Animator.StringToHash("Grounded");
-            _animIDJump = Animator.StringToHash("Jump");
-            _animIDFreeFall = Animator.StringToHash("FreeFall");
-            _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-            _animIDHit = Animator.StringToHash("Hit");
-            _animIDAttack = Animator.StringToHash("Attack");
         }
 
         public void GroundedCheck()
@@ -210,7 +175,7 @@ namespace StarterAssets
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetBool(_animIDGrounded, Grounded);
+                _playerAnimations.Animator.SetBool(_playerAnimations.AnimIDGrounded, Grounded);
             }
         }
 
@@ -298,8 +263,8 @@ namespace StarterAssets
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+                _playerAnimations.Animator.SetFloat(_playerAnimations.AnimIDSpeed, _animationBlend);
+                _playerAnimations.Animator.SetFloat(_playerAnimations.AnimIDMotionSpeed, inputMagnitude);
             }
         }
 
@@ -313,8 +278,8 @@ namespace StarterAssets
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDJump, false);
-                    _animator.SetBool(_animIDFreeFall, false);
+                    _playerAnimations.Animator.SetBool(_playerAnimations.AnimIDJump, false);
+                    _playerAnimations.Animator.SetBool(_playerAnimations.AnimIDFreeFall, false);
                 }
 
                 // stop our velocity dropping infinitely when grounded
@@ -332,7 +297,7 @@ namespace StarterAssets
                     // update animator if using character
                     if (_hasAnimator)
                     {
-                        _animator.SetBool(_animIDJump, true);
+                        _playerAnimations.Animator.SetBool(_playerAnimations.AnimIDJump, true);
                     }
                 }
 
@@ -357,7 +322,7 @@ namespace StarterAssets
                     // update animator if using character
                     if (_hasAnimator)
                     {
-                        _animator.SetBool(_animIDFreeFall, true);
+                        _playerAnimations.Animator.SetBool(_playerAnimations.AnimIDFreeFall, true);
                     }
                 }
 
@@ -391,13 +356,6 @@ namespace StarterAssets
             Gizmos.DrawSphere(
                 new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
                 GroundedRadius);
-        }
-
-        public void MeleeAttackStart() { }
-        public void MeleeAttackEnd() 
-        {
-            _animator.SetBool(_animIDAttack, false);
-            _input.attack = false;
         }
     }
 }
