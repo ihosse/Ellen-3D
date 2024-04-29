@@ -1,8 +1,9 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 public class IdleState : IState
 {
     private Chomper chomper;
+    private float timeToAttack = 2;
+    private float attackTimeCount;
 
     public IdleState(Chomper chomper)
     {
@@ -11,7 +12,9 @@ public class IdleState : IState
 
     public void Enter()
     {
+        Debug.Log("IdleState");
         chomper.NavMeshAgent.speed = 0;
+        attackTimeCount = Time.time;
     }
 
     public void Exit()
@@ -19,9 +22,19 @@ public class IdleState : IState
 
     }
 
+    private bool CheckIfCanAttack()
+    {
+        bool canAttack = false;
+
+        if (attackTimeCount + timeToAttack < Time.time)
+            canAttack = true;
+
+        return canAttack;
+    }
+
     public void Update()
     {
-        if (CheckIfTargetIsInRangeToAttack())
+        if (CheckIfTargetIsInRangeToAttack() && CheckIfCanAttack())
         {
             chomper.StateMachine.TransitionTo(chomper.StateMachine.AttackState);
             return;
@@ -48,7 +61,6 @@ public class IdleState : IState
             targetInRangeToAttack = true;
         }
 
-
         return targetInRangeToAttack;
     }
 
@@ -66,5 +78,4 @@ public class IdleState : IState
 
         return playerMovingAway;
     }
-
 }

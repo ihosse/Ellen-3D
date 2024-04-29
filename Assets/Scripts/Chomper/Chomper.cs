@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,17 +15,20 @@ public class Chomper : MonoBehaviour
     [field: SerializeField] public float SightDistance { get; private set; }  = 5f;
     [field: SerializeField] public float MaxSightRange { get; private set; }  = 10f;
 
+    [SerializeField]
+    private CameraImpulse cameraImpulse;
+
     public Animator Animator { get; private set; }
     public NavMeshAgent NavMeshAgent { get; private set; }
     public StateMachine StateMachine { get; private set; }
 
-    private new Collider collider;
+    public Collider Collider { get; private set; }
 
     private void Awake()
     {
         Animator = GetComponent<Animator>();
         NavMeshAgent = GetComponent<NavMeshAgent>();
-        collider = GetComponent<Collider>();
+        Collider = GetComponent<Collider>();
     }
     private void Start()
     {
@@ -37,13 +41,32 @@ public class Chomper : MonoBehaviour
         StateMachine.Update();
     }
 
+    public void Hit()
+    {
+        StateMachine.TransitionTo(StateMachine.HurtState);
+    }
+
+    public void ApllyFreezeScreenEffect()
+    {
+        StartCoroutine(FreezeScreenEffectTimer());
+    }
+
+    private IEnumerator FreezeScreenEffectTimer()
+    {
+        yield return new WaitForSecondsRealtime(.15f);
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(.25f);
+        if (cameraImpulse != null) cameraImpulse.ApplyImpulse();
+        Time.timeScale = 1f;
+    }
+
     public void AttackBegin() 
     {
-        collider.enabled = true;
+        //Collider.enabled = true;
     }
     public void AttackEnd()
     {
-        collider.enabled = false;
+        //Collider.enabled = false;
     }
     public void PlayStep() {}
     public void Grunt() {}

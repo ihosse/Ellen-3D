@@ -13,6 +13,8 @@ public class AttackState : IState
 
     public void Enter()
     {
+        Debug.Log("AttackState");
+        chomper.Animator.SetBool("Attack", true);
         chomper.NavMeshAgent.speed = 0;
         chomper.transform.LookAt(chomper.PlayerTarget.transform.position);
         startTime = Time.time;
@@ -29,10 +31,7 @@ public class AttackState : IState
         {
             chomper.Animator.SetBool("Attack", false);
             chomper.StateMachine.TransitionTo(chomper.StateMachine.IdleState);
-            return;
         }
-
-        chomper.Animator.SetBool("Attack", true);
     }
 
     private bool CheckIfAttackAnimationEnded()

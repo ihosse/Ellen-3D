@@ -60,6 +60,7 @@ namespace StarterAssets
         [Header("Cinemachine")]
         [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
         public GameObject CinemachineCameraTarget;
+        public CameraImpulse cameraImpulse;
 
         [Tooltip("How far in degrees can you move the camera up")]
         public float TopClamp = 70.0f;
@@ -184,7 +185,7 @@ namespace StarterAssets
 
         public void StopMovementForSeconds(float seconds)
         {
-            DisableMovementControl(false);
+            DisableMovementControl(true);
             StartCoroutine(WaitAndEnableMovement(seconds));
         }
 
@@ -193,9 +194,10 @@ namespace StarterAssets
             yield return new WaitForSecondsRealtime(.15f);
             Time.timeScale = 0f;
             yield return new WaitForSecondsRealtime(.25f);
+            if (cameraImpulse != null) cameraImpulse.ApplyImpulse();
             Time.timeScale = 1f;
             yield return new WaitForSecondsRealtime(seconds);
-            DisableMovementControl(true);
+            DisableMovementControl(false);
         }
 
         private void SetMovementInputsToDefault()

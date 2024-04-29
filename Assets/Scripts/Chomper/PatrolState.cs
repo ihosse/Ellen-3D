@@ -17,6 +17,7 @@ public class PatrolState : IState
 
     public void Enter()
     {
+        Debug.Log("PatrolState");
         chomper.NavMeshAgent.speed = chomper.WalkSpeed;
         
     }

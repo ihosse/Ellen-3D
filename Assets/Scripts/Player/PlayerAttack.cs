@@ -1,17 +1,24 @@
 using StarterAssets;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
+    [SerializeField]
+    private Collider hitBox;
+
     private PlayerAnimations _playerAnimations;
     private StarterAssetsInputs _playerInput;
     private ThirdPersonController _thirdPersonController;
 
     private bool isAttacking;
+    private int attackNumber;
     private bool _hasAnimator;
 
+    private void Start()
+    {
+        hitBox.enabled = false;
+    }
     public void Initialize(PlayerAnimations animations, ThirdPersonController thirdPerson)
     {
         if (animations != null)
@@ -31,11 +38,16 @@ public class PlayerAttack : MonoBehaviour
     }
     public void Attack()
     {
-        if (_playerInput.attack && !isAttacking)
+        if (isAttacking)
+            return;
+
+
+        if (_playerInput.attack)
         {
             if (_hasAnimator)
             {
-                _playerAnimations.Animator.SetBool(_playerAnimations.AnimIDAttack, true);
+                attackNumber = Random.Range(1, 5);
+                _playerAnimations.Animator.SetInteger(_playerAnimations.AnimIDAttack, attackNumber);
             }
 
             isAttacking = true;
@@ -44,18 +56,25 @@ public class PlayerAttack : MonoBehaviour
             StartCoroutine(WaitToAttackAnimationEnd());
         }
     }
+
     private IEnumerator WaitToAttackAnimationEnd()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(.5f);
+        _playerAnimations.Animator.SetInteger(_playerAnimations.AnimIDAttack, 0);
+        
+        yield return new WaitForSeconds(.1f);
+        _playerInput.attack = false;
         isAttacking = false;
+        hitBox.enabled = false;
+
         _thirdPersonController.DisableMovementControl(false);
     }
 
-    public void MeleeAttackStart() { }
+    public void MeleeAttackStart() {
+        hitBox.enabled = true;
+    }
     public void MeleeAttackEnd()
     {
-        _playerAnimations.Animator.SetBool(_playerAnimations.AnimIDAttack, false);
-
-        _playerInput.attack = false;
+        hitBox.enabled = false;
     }
 }

@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChaseState : IState
 {
@@ -12,6 +11,7 @@ public class ChaseState : IState
 
     public void Enter()
     {
+        Debug.Log("ChaseState");
         chomper.NavMeshAgent.speed = chomper.ChaseSpeed;
     }
 
@@ -21,7 +21,7 @@ public class ChaseState : IState
 
     public void Update()
     {
-        if(CheckIfTargetIsInRangeToAttack())
+        if (CheckIfTargetIsInRangeToAttack())
         {
             chomper.StateMachine.TransitionTo(chomper.StateMachine.AttackState);
             return;
