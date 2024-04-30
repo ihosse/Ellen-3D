@@ -7,6 +7,7 @@
     public IdleState IdleState { get; private set; }
     public AttackState AttackState { get; private set; }
     public HurtState HurtState { get; private set; }
+    public DeathState DeathState { get; private set; }
 
     public StateMachine(Chomper chomper)
     {
@@ -15,6 +16,7 @@
         this.IdleState = new IdleState(chomper);
         this.AttackState = new AttackState(chomper);
         this.HurtState = new HurtState(chomper);
+        this.DeathState = new DeathState(chomper);
     }
 
     public void Initialize(IState startingState)

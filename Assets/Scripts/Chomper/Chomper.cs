@@ -22,6 +22,8 @@ public class Chomper : MonoBehaviour
     public NavMeshAgent NavMeshAgent { get; private set; }
     public StateMachine StateMachine { get; private set; }
 
+    public ChomperSound Sound { get; private set; }
+
     public Collider Collider { get; private set; }
 
     private void Awake()
@@ -29,6 +31,7 @@ public class Chomper : MonoBehaviour
         Animator = GetComponent<Animator>();
         NavMeshAgent = GetComponent<NavMeshAgent>();
         Collider = GetComponent<Collider>();
+        Sound = GetComponent<ChomperSound>();
     }
     private void Start()
     {
@@ -39,6 +42,11 @@ public class Chomper : MonoBehaviour
     private void Update()
     {
         StateMachine.Update();
+    }
+
+    public void Death()
+    {
+        StateMachine.TransitionTo(StateMachine.DeathState);
     }
 
     public void Hit()
@@ -55,6 +63,7 @@ public class Chomper : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(.15f);
         Time.timeScale = 0f;
+        Sound.OnHit();
         yield return new WaitForSecondsRealtime(.25f);
         if (cameraImpulse != null) cameraImpulse.ApplyImpulse();
         Time.timeScale = 1f;
@@ -62,12 +71,18 @@ public class Chomper : MonoBehaviour
 
     public void AttackBegin() 
     {
-        //Collider.enabled = true;
+        Sound.OnAttack();
     }
     public void AttackEnd()
     {
-        //Collider.enabled = false;
     }
-    public void PlayStep() {}
-    public void Grunt() {}
+    public void PlayStep() 
+    {
+        Sound.OnFootstep();
+    }
+    public void Grunt() 
+    {
+
+
+    }
 }

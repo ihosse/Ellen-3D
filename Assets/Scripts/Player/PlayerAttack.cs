@@ -46,7 +46,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (_hasAnimator)
             {
-                attackNumber = Random.Range(1, 5);
+                attackNumber = Random.Range(2, 5);
                 _playerAnimations.Animator.SetInteger(_playerAnimations.AnimIDAttack, attackNumber);
             }
 
