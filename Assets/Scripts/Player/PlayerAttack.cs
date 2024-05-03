@@ -1,11 +1,17 @@
 using StarterAssets;
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerAttack : MonoBehaviour
 {
+    public bool CanAttack { get; set; } = true;
+
     [SerializeField]
     private Collider hitBox;
+
+    [SerializeField]
+    private GameObject staff;
 
     private PlayerAnimations _playerAnimations;
     private StarterAssetsInputs _playerInput;
@@ -18,6 +24,7 @@ public class PlayerAttack : MonoBehaviour
     private void Start()
     {
         hitBox.enabled = false;
+        staff.SetActive(false);
     }
     public void Initialize(PlayerAnimations animations, ThirdPersonController thirdPerson)
     {
@@ -36,9 +43,17 @@ public class PlayerAttack : MonoBehaviour
         _playerAnimations = animations;
         _thirdPersonController = thirdPerson;
     }
+
+    public void EnableStaff()
+    {
+       staff.SetActive(true);
+       CanAttack = true;
+       hitBox.enabled = false;
+    }
+
     public void Attack()
     {
-        if (isAttacking)
+        if (!CanAttack || isAttacking)
             return;
 
 
@@ -49,6 +64,7 @@ public class PlayerAttack : MonoBehaviour
                 attackNumber = Random.Range(2, 5);
                 _playerAnimations.Animator.SetInteger(_playerAnimations.AnimIDAttack, attackNumber);
             }
+            hitBox.enabled = true;
 
             isAttacking = true;
             _thirdPersonController.DisableMovementControl(true);

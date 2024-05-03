@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 public class IdleState : IState
 {
+    public bool IsEnabled { get; set; }
     private Chomper chomper;
     private float timeToAttack = 2;
     private float attackTimeCount;
+
 
     public IdleState(Chomper chomper)
     {
@@ -12,7 +14,6 @@ public class IdleState : IState
 
     public void Enter()
     {
-        Debug.Log("IdleState");
         chomper.NavMeshAgent.speed = 0;
         attackTimeCount = Time.time;
     }
@@ -34,6 +35,9 @@ public class IdleState : IState
 
     public void Update()
     {
+        if (!IsEnabled)
+            return;
+
         if (CheckIfTargetIsInRangeToAttack() && CheckIfCanAttack())
         {
             chomper.StateMachine.TransitionTo(chomper.StateMachine.AttackState);

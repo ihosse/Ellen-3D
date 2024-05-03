@@ -103,6 +103,7 @@ namespace StarterAssets
         private bool _disableMovement;
 
         private Vector2 _lastMoveValue;
+        private Vector2 _inputValue;
 
         private bool IsCurrentDeviceMouse
         {
@@ -160,6 +161,11 @@ namespace StarterAssets
             CameraRotation();
         }
 
+        private void Update()
+        {
+            _inputValue = _input.move;
+        }
+
         public void Hit()
         {
             _playerAnimations.Animator.SetTrigger(_playerAnimations.AnimIDHit);
@@ -179,7 +185,8 @@ namespace StarterAssets
             }
             else
             {
-                _input.move = _lastMoveValue;
+                if(_input.move.magnitude > 0)
+                    _input.move = _lastMoveValue;
             }
         }
 
@@ -198,12 +205,6 @@ namespace StarterAssets
             Time.timeScale = 1f;
             yield return new WaitForSecondsRealtime(seconds);
             DisableMovementControl(false);
-        }
-
-        private void SetMovementInputsToDefault()
-        {
-            _input.move = Vector2.zero;
-            _input.jump = false;
         }
 
         public void GroundedCheck()
@@ -244,9 +245,6 @@ namespace StarterAssets
 
         public void Move()
         {
-            if (_disableMovement)
-                SetMovementInputsToDefault();
-
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -254,7 +252,7 @@ namespace StarterAssets
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
-            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+            if (_input.move == Vector2.zero || _disableMovement) targetSpeed = 0.0f;
 
             // a reference to the players current horizontal velocity
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -315,8 +313,6 @@ namespace StarterAssets
 
         public void JumpAndGravity()
         {
-            if (_disableMovement)
-                SetMovementInputsToDefault();
 
             if (Grounded)
             {

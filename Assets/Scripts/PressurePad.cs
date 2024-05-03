@@ -8,16 +8,21 @@ public class PressurePad : MonoBehaviour
     public bool IsBlocked { get; set; }
 
     [SerializeField]
+    private bool shouldRunOnce;
+
+    [SerializeField]
     private AudioClip disabledSound;
 
     [SerializeField]
     private AudioClip enabledSound;
 
     private AudioSource audioSource;
+    private new Collider collider;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        collider = GetComponent<Collider>();    
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -31,6 +36,9 @@ public class PressurePad : MonoBehaviour
             {
                 audioSource.PlayOneShot(enabledSound);
                 OnPress?.Invoke();
+
+                if(shouldRunOnce)
+                    collider.enabled = false;
             }
         }
     }

@@ -16,6 +16,7 @@ public class Collectible : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GameObject particleEffect = Instantiate(effect.gameObject);
+            particleEffect.transform.position = transform.position;
             Destroy(particleEffect,1);
 
             OnCollect?.Invoke();

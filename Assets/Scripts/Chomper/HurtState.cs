@@ -19,7 +19,6 @@ public class HurtState : IState
 
     public void Enter()
     {
-        Debug.Log("HurtState");
         chomper.Collider.enabled = false;
         
         //needed to set Attack to false because the Chomper can be hit during an attack
@@ -57,7 +56,7 @@ public class HurtState : IState
 
     private void ApplyKnockback(Vector3 knockbackDirection)
     {
-        Debug.DrawLine(chomper.transform.position, knockbackDirection * 5, Color.red);
+        Debug.DrawLine(chomper.transform.position, knockbackDirection * 3, Color.red);
        
         if (recoverTimeCount + timeToRecover < Time.time)
         {

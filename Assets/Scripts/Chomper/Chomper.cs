@@ -36,12 +36,18 @@ public class Chomper : MonoBehaviour
     private void Start()
     {
         StateMachine = new StateMachine(this);
-        StateMachine.Initialize(StateMachine.PatrolState);
+        StateMachine.Initialize(StateMachine.IdleState);
     }
    
     private void Update()
     {
         StateMachine.Update();
+    }
+
+    public void StartPatrol()
+    {
+        StateMachine.TransitionTo(StateMachine.PatrolState);
+        StateMachine.IdleState.IsEnabled = true;
     }
 
     public void Death()

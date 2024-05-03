@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting.FullSerializer;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PatrolState : IState
 {
@@ -17,9 +16,7 @@ public class PatrolState : IState
 
     public void Enter()
     {
-        Debug.Log("PatrolState");
         chomper.NavMeshAgent.speed = chomper.WalkSpeed;
-        
     }
 
     public void Exit()

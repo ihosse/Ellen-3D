@@ -10,6 +10,9 @@ public class TriggerEvent : MonoBehaviour
     private string colliderTag;
 
     [SerializeField]
+    private CameraImpulse cameraImpulseEffect;
+
+    [SerializeField]
     private bool isOneTimeUse = true;
 
     private void OnTriggerEnter(Collider other)
@@ -17,6 +20,8 @@ public class TriggerEvent : MonoBehaviour
         if (other.CompareTag(colliderTag))
         {
             OnTrigger?.Invoke();
+
+            if(cameraImpulseEffect != null) cameraImpulseEffect.ApplyImpulse();
 
             if (isOneTimeUse)
                 GetComponent<Collider>().enabled = false;

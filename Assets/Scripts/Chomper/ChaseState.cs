@@ -11,7 +11,6 @@ public class ChaseState : IState
 
     public void Enter()
     {
-        Debug.Log("ChaseState");
         chomper.NavMeshAgent.speed = chomper.ChaseSpeed;
     }
 

@@ -1,16 +1,25 @@
 using StarterAssets;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
+    private CameraImpulse cameraImpulse;
+    
     private ThirdPersonController thirdPersonController;
+    private StarterAssetsInputs starterAssetsInput;
     private PlayerAttack playerAttack;
     private PlayerSound playerSound;
     private PlayerAnimations playerAnimations;
 
+    private bool _disableMovement;
+
+
     private void Awake()
     {
         thirdPersonController = GetComponent<ThirdPersonController>();
+        starterAssetsInput = GetComponent<StarterAssetsInputs>();
         playerAttack = GetComponent<PlayerAttack>();
         playerAnimations  = GetComponent<PlayerAnimations>();
         playerSound = GetComponent<PlayerSound>();
@@ -25,5 +34,26 @@ public class PlayerController : MonoBehaviour
         thirdPersonController.GroundedCheck();
         thirdPersonController.Move();
         playerAttack.Attack();
+    }
+
+    public void OnStaffCollected()
+    {
+        playerAttack.EnableStaff();
+    }
+
+    public void DisableAttack(bool disable)
+    {
+        if (playerAttack == null)
+            playerAttack = GetComponent<PlayerAttack>();
+
+        playerAttack.CanAttack = !disable;
+    }
+
+    public void DisableMovementControl(bool disable)
+    {
+        if (thirdPersonController == null)
+            thirdPersonController = GetComponent<ThirdPersonController>();
+
+        thirdPersonController.DisableMovementControl(disable);
     }
 }
