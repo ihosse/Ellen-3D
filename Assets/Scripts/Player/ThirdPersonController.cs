@@ -177,17 +177,8 @@ namespace StarterAssets
                 _input = GetComponent<StarterAssetsInputs>();
 
             _disableMovement = disable;
-
-            if (_disableMovement)
-            {
-                _lastMoveValue = _input.move;
-                _speed = 0;
-            }
-            else
-            {
-                if(_input.move.magnitude > 0)
-                    _input.move = _lastMoveValue;
-            }
+            _input.attack = false;
+            
         }
 
         public void StopMovementForSeconds(float seconds)
