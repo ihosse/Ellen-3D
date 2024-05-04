@@ -31,8 +31,8 @@ public class HurtState : IState
         Vector3 chomperPosition = chomper.transform.position;
         Vector3 knockbackDirection = chomper.PlayerTarget.forward.normalized;
 
-        chomper.NavMeshAgent.SetDestination(knockbackDirection * 5);
-        chomper.NavMeshAgent.speed = 100;
+        chomper.NavMeshAgent.SetDestination(knockbackDirection * 3);
+        chomper.NavMeshAgent.speed = knockbackForce;
         chomper.NavMeshAgent.angularSpeed = 0;
 
         recoverTimeCount = Time.time;

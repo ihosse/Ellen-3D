@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,9 @@ public class Collectible : MonoBehaviour
     [SerializeField]
     private AudioClip audioClip;
 
+    [SerializeField]
+    private CinemachineImpulseSource impulseSource;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -21,7 +25,10 @@ public class Collectible : MonoBehaviour
 
             OnCollect?.Invoke();
 
-            if(audioClip != null)
+            if (impulseSource != null)
+                impulseSource.GenerateImpulse();
+
+            if (audioClip != null)
                 AudioSource.PlayClipAtPoint(audioClip, transform.position);
 
             gameObject.SetActive(false);

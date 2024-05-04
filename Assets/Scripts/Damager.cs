@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Damager : MonoBehaviour
 {
     [SerializeField]
-    private bool applyCameraImpulseOnHitSomething;
+    private bool applyCameraImpulseWhenHitSomething;
 
     [SerializeField]
     private CameraImpulse cameraImpulse;
@@ -17,6 +17,8 @@ public class Damager : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
+        print(gameObject.name);
+
         if (other.TryGetComponent<Damageable>(out Damageable damageable))
         {
             damageable.Hit();
@@ -25,7 +27,7 @@ public class Damager : MonoBehaviour
         else
         {
             OnHitSomething?.Invoke();
-            if (applyCameraImpulseOnHitSomething)
+            if (applyCameraImpulseWhenHitSomething)
                 StartCoroutine(ApplyCameraImpulse());
         }
     }

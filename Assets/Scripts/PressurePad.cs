@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,6 +7,9 @@ public class PressurePad : MonoBehaviour
 {
     public UnityEvent OnPress;
     public bool IsBlocked { get; set; }
+
+    [SerializeField]
+    private CinemachineImpulseSource impulseSource;
 
     [SerializeField]
     private bool shouldRunOnce;
@@ -28,6 +32,9 @@ public class PressurePad : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if(impulseSource != null)
+                    impulseSource.GenerateImpulse();
+
             if (IsBlocked)
             {
                 audioSource.PlayOneShot(disabledSound);

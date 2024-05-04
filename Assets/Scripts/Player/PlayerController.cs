@@ -1,12 +1,8 @@
 using StarterAssets;
-using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
-{
-    [SerializeField]
-    private CameraImpulse cameraImpulse;
-    
+{   
     private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInput;
     private PlayerAttack playerAttack;

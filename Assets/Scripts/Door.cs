@@ -1,4 +1,3 @@
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -30,8 +29,9 @@ public class Door : MonoBehaviour
 
         isOpen = true;
         animator.SetTrigger("Open");
+
         OnStartOpen?.Invoke();
-        Invoke("Close", timeToFinish);
+        Invoke(nameof(Close), timeToFinish);
     }
 
     public void Close()
