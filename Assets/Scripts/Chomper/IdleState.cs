@@ -44,10 +44,14 @@ public class IdleState : IState
             return;
         }
 
-        if (CheckIfPlayerIsMovingAway())
+        else if (CheckIfPlayerIsMovingAway())
         {
             chomper.StateMachine.TransitionTo(chomper.StateMachine.ChaseState);
             return;
+        }
+        else
+        {
+            chomper.StateMachine.TransitionTo(chomper.StateMachine.PatrolState);
         }
 
         chomper.Animator.SetFloat("Speed", 0);

@@ -1,7 +1,6 @@
 using StarterAssets;
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -24,7 +23,11 @@ public class PlayerAttack : MonoBehaviour
     private void Start()
     {
         hitBox.enabled = false;
-        staff.SetActive(false);
+
+        if (staff != null)
+            staff.SetActive(false);
+        else
+            Debug.LogError("Variable staff has not been assigned");
     }
     public void Initialize(PlayerAnimations animations, ThirdPersonController thirdPerson)
     {
@@ -46,6 +49,9 @@ public class PlayerAttack : MonoBehaviour
 
     public void EnableStaff()
     {
+        if (staff == null)
+            return;
+
        staff.SetActive(true);
        CanAttack = true;
        hitBox.enabled = false;
