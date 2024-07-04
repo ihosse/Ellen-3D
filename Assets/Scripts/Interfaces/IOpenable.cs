@@ -1,4 +1,4 @@
 public interface IOpenable
 {
-    public void Open(IOpener key);
+    public void TryOpen(IOpener key);
 }

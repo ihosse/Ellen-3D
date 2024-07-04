@@ -901,19 +901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnCollect:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 910141574}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: OnStaffCollected
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   effect: {fileID: 1706248271778307812, guid: c5470d769f4f52e469624c3c0f2b79ec, type: 3}
   audioClip: {fileID: 8300000, guid: 2ff9b64b4649c4db386ff548f8482b99, type: 3}
   impulseSource: {fileID: 57485958}
@@ -5320,37 +5308,37 @@ PrefabInstance:
     - target: {fileID: 6198394840585254032, guid: 87b380bc0be012347bd870cb0f2d4e92,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.33
+      value: 0.43
       objectReference: {fileID: 0}
     - target: {fileID: 6198394840585254032, guid: 87b380bc0be012347bd870cb0f2d4e92,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.09
+      value: 4.04
       objectReference: {fileID: 0}
     - target: {fileID: 6198394840585254032, guid: 87b380bc0be012347bd870cb0f2d4e92,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.78
+      value: 3.11
       objectReference: {fileID: 0}
     - target: {fileID: 6198394840585254032, guid: 87b380bc0be012347bd870cb0f2d4e92,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99758846
+      value: -0.9989964
       objectReference: {fileID: 0}
     - target: {fileID: 6198394840585254032, guid: 87b380bc0be012347bd870cb0f2d4e92,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0032920367
+      value: 0.027924314
       objectReference: {fileID: 0}
     - target: {fileID: 6198394840585254032, guid: 87b380bc0be012347bd870cb0f2d4e92,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.06865845
+      value: 0.03424591
       objectReference: {fileID: 0}
     - target: {fileID: 6198394840585254032, guid: 87b380bc0be012347bd870cb0f2d4e92,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.009612954
+      value: 0.0073338416
       objectReference: {fileID: 0}
     - target: {fileID: 6198394840585254039, guid: 87b380bc0be012347bd870cb0f2d4e92,
         type: 3}
@@ -13484,6 +13472,11 @@ PrefabInstance:
       objectReference: {fileID: 1255088304}
     - target: {fileID: 6106817803596100918, guid: ab00d9b3d41b48e48a5f1c9765d2ea97,
         type: 3}
+      propertyPath: <IsLocked>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106817803596100918, guid: ab00d9b3d41b48e48a5f1c9765d2ea97,
+        type: 3}
       propertyPath: OnStartOpen.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
       value: 1
       objectReference: {fileID: 0}
@@ -13562,7 +13555,9 @@ PrefabInstance:
       propertyPath: topPriorityCamera
       value: 
       objectReference: {fileID: 240328408}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8501035942867084181, guid: ab00d9b3d41b48e48a5f1c9765d2ea97, type: 3}
+    - {fileID: 7443773885732129011, guid: ab00d9b3d41b48e48a5f1c9765d2ea97, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -23886,6 +23881,7 @@ MonoBehaviour:
   isOneShot: 0
   disabledSound: {fileID: 8300000, guid: 16592a474aee2455abf0b4722bc2d328, type: 3}
   enabledSound: {fileID: 8300000, guid: a954f34c9cc9848ae957e7c7a312a400, type: 3}
+  materialChanger: {fileID: 1692309615}
 --- !u!65 &2019986397
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24631,9 +24627,21 @@ MonoBehaviour:
   OnCollect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 910141574}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: OnKeyCollected
+      - m_Target: {fileID: 2019986396}
+        m_TargetAssemblyTypeName: PressurePad, Assembly-CSharp
+        m_MethodName: Activate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 405010757}
+        m_TargetAssemblyTypeName: Door, Assembly-CSharp
+        m_MethodName: Unlock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

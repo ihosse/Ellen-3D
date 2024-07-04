@@ -4,16 +4,17 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 [RequireComponent(typeof(Animator), typeof(AudioSource))]
-public class Door : MonoBehaviour, IOpenable
+[RequireComponent(typeof(MaterialChanger))]
+public class Door : MonoBehaviour
 {
     [field: SerializeField]
-    public bool IsLocked { get; set; }
+    public bool IsLocked { get; private set; }
 
     [SerializeField]
     private float openDelay = 1;
 
     [SerializeField]
-    private float timeToFinish = 1;
+    private float timeToEnablePlayer   = 1;
 
     [SerializeField]
     private AudioManager audioManager;
@@ -40,52 +41,66 @@ public class Door : MonoBehaviour, IOpenable
 
     private Animator animator;
     private AudioSource audioSource;
+    private MaterialChanger materialChanger;
+
     private bool isOpen;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        materialChanger = GetComponent<MaterialChanger>();  
 
         isOpen = false;
-        IsLocked = false;
+        materialChanger.ChangeToDisabledMaterial();
     }
 
-    public void Open(IOpener key)
+    public void Unlock()
     {
-        //if (key.GetDoor() != this.gameObject)
-        //    return;
-
-        //if (isOpen || IsLocked)
-        //    return;
-
         IsLocked = false;
-        isOpen = true;
+        materialChanger.ChangeToEnabledMaterial();
+    }
+
+    public void Open()
+    {
+        if (isOpen || IsLocked)
+            return;
 
         StartCoroutine(OpenSequence());
     }
 
     private IEnumerator OpenSequence()
     {
-        particle.Play();
-
-        audioManager.SnapshotTransitionTo(audioManager.Exploration, 1);
-
         playerController.DisableMovementControl(true);
         playerController.DisableAttack(true);
 
-        openPriorityCamera.MoveToTopOfPrioritySubqueue();
+        if(openPriorityCamera != null)
+            openPriorityCamera.MoveToTopOfPrioritySubqueue();
 
         yield return new WaitForSeconds(openDelay);
 
-        animator.SetTrigger("Open");
-        audioSource.PlayOneShot(audioFx);
+        if(particle != null)
+            particle.Play();
 
-        Invoke(nameof(Close), timeToFinish);
+        if (audioManager != null)
+            audioManager.SnapshotTransitionTo(audioManager.Exploration, 1);
+
+        if (audioFx != null)
+            audioSource.PlayOneShot(audioFx);
+
+        animator.SetTrigger("Open");
+
+        isOpen = true; 
+
+        Invoke(nameof(Close), timeToEnablePlayer);
     }
 
     public void Close()
     {
-        closePriorityCamera.MoveToTopOfPrioritySubqueue();
+        if(closePriorityCamera != null)
+            closePriorityCamera.MoveToTopOfPrioritySubqueue();
+
+        playerController.DisableMovementControl(false);
+        playerController.DisableAttack(false);
     }
 }

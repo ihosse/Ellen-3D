@@ -1,6 +1,5 @@
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider), typeof(AudioSource))]
 public class PressurePad : MonoBehaviour
@@ -20,33 +19,42 @@ public class PressurePad : MonoBehaviour
     [SerializeField]
     private AudioClip enabledSound;
 
+    [SerializeField]
+    private MaterialChanger materialChanger;
+
     private AudioSource audioSource;
     private new Collider collider;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        collider = GetComponent<Collider>();    
+        collider = GetComponent<Collider>();
     }
+
+    public void Activate()
+    {
+        materialChanger.ChangeToEnabledMaterial();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if(impulseSource != null)
-                    impulseSource.GenerateImpulse();
+            if (impulseSource != null)
+                impulseSource.GenerateImpulse();
 
-            //if (IsBlocked)
-            //{
-            //    audioSource.PlayOneShot(disabledSound);
-            //}
-            //else
-            //{
+            if (doorToOpen.IsLocked == false)
+            {
                 audioSource.PlayOneShot(enabledSound);
-            doorToOpen.Open(null);
+                doorToOpen.Open();
 
-            //    if(isOneShot)
-            //        collider.enabled = false;
-            //}
+                if (isOneShot)
+                    collider.enabled = false;
+            }
+            else
+            {
+                audioSource.PlayOneShot(disabledSound);
+            }
         }
     }
 }

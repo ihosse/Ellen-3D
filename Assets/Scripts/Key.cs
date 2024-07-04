@@ -2,7 +2,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Collectible : MonoBehaviour
+public class Key : MonoBehaviour
 {
     public UnityEvent OnCollect;
 
@@ -19,11 +19,8 @@ public class Collectible : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameObject particleEffect = Instantiate(effect.gameObject);
-            particleEffect.transform.position = transform.position;
-            Destroy(particleEffect,1);
-
-            OnCollect?.Invoke();
+            if (effect != null)
+                CreateParticle();
 
             if (impulseSource != null)
                 impulseSource.GenerateImpulse();
@@ -32,6 +29,15 @@ public class Collectible : MonoBehaviour
                 AudioSource.PlayClipAtPoint(audioClip, transform.position);
 
             gameObject.SetActive(false);
+
+            OnCollect.Invoke();
         }
+    }
+
+    private void CreateParticle()
+    {
+        GameObject particleEffect = Instantiate(effect.gameObject);
+        particleEffect.transform.position = transform.position;
+        Destroy(particleEffect, 1);
     }
 }

@@ -63,10 +63,10 @@ public class GameManager : MonoBehaviour
 
         playerVirtualCamera.MoveToTopOfPrioritySubqueue();
 
-        doorCave.IsLocked = true;
+        //doorCave.IsLocked = true;
         doorCaveEmissiveColorChanger.ChangeToDisabledMaterial();
 
-        doorEnd.IsLocked = true;
+        //doorEnd.IsLocked = true;
         doorEndEmissiveColorChanger.ChangeToDisabledMaterial();
 
         // pressurePad.IsBlocked = true;
@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
 
     public void OnKeyCollected()
     {
-        doorCave.IsLocked = false;
+        //doorCave.IsLocked = false;
         doorCaveEmissiveColorChanger.ChangeToEnabledMaterial();
 
         //pressurePad.IsBlocked = false;
@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(3);
 
-        doorEnd.IsLocked = false;
+        //doorEnd.IsLocked = false;
         doorEndEmissiveColorChanger.ChangeToEnabledMaterial();
 
         //doorEnd.Open();
