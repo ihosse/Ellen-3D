@@ -1157,6 +1157,8 @@ PlayableDirector:
     value: {fileID: 2115473453}
   - key: {fileID: -2179846697324557416, guid: e3653ea83c8a3864b871f5322213ab54, type: 2}
     value: {fileID: 66179710}
+  - key: {fileID: 9055298148425260224, guid: e3653ea83c8a3864b871f5322213ab54, type: 2}
+    value: {fileID: 89332627}
   m_ExposedReferences:
     m_References:
     - 878c0ffd5c75897419d9ec63b95de30c: {fileID: 488817014}
@@ -24338,7 +24340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorToOpen: {fileID: 405010757}
   impulseSource: {fileID: 2019986401}
-  isOneShot: 0
+  isOneShot: 1
   disabledSound: {fileID: 8300000, guid: 16592a474aee2455abf0b4722bc2d328, type: 3}
   enabledSound: {fileID: 8300000, guid: a954f34c9cc9848ae957e7c7a312a400, type: 3}
   materialChanger: {fileID: 1692309615}
