@@ -5,14 +5,14 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Collider), typeof(AudioSource))]
 public class PressurePad : MonoBehaviour
 {
-    public UnityEvent OnPress;
-    public bool IsBlocked { get; set; }
+    [SerializeField]
+    private Door doorToOpen;
 
     [SerializeField]
     private CinemachineImpulseSource impulseSource;
 
     [SerializeField]
-    private bool shouldRunOnce;
+    private bool isOneShot;
 
     [SerializeField]
     private AudioClip disabledSound;
@@ -35,18 +35,18 @@ public class PressurePad : MonoBehaviour
             if(impulseSource != null)
                     impulseSource.GenerateImpulse();
 
-            if (IsBlocked)
-            {
-                audioSource.PlayOneShot(disabledSound);
-            }
-            else
-            {
+            //if (IsBlocked)
+            //{
+            //    audioSource.PlayOneShot(disabledSound);
+            //}
+            //else
+            //{
                 audioSource.PlayOneShot(enabledSound);
-                OnPress?.Invoke();
+            doorToOpen.Open(null);
 
-                if(shouldRunOnce)
-                    collider.enabled = false;
-            }
+            //    if(isOneShot)
+            //        collider.enabled = false;
+            //}
         }
     }
 }

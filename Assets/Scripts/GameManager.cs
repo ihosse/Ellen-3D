@@ -63,13 +63,13 @@ public class GameManager : MonoBehaviour
 
         playerVirtualCamera.MoveToTopOfPrioritySubqueue();
 
-        doorCave.IsBlocked = true;
+        doorCave.IsLocked = true;
         doorCaveEmissiveColorChanger.ChangeToDisabledMaterial();
 
-        doorEnd.IsBlocked = true;
+        doorEnd.IsLocked = true;
         doorEndEmissiveColorChanger.ChangeToDisabledMaterial();
 
-        pressurePad.IsBlocked = true;
+        // pressurePad.IsBlocked = true;
         padEmissiveColorChanger.ChangeToDisabledMaterial();
 
         chomper.gameObject.SetActive(false);
@@ -100,16 +100,16 @@ public class GameManager : MonoBehaviour
 
     public void OnKeyCollected()
     {
-        doorCave.IsBlocked = false;
+        doorCave.IsLocked = false;
         doorCaveEmissiveColorChanger.ChangeToEnabledMaterial();
 
-        pressurePad.IsBlocked = false;
+        //pressurePad.IsBlocked = false;
         padEmissiveColorChanger.ChangeToEnabledMaterial();
     }
     
     public void OnPadActivated()
     {
-        doorCave.Open();
+        //doorCave.Open();
         playerController.DisableMovementControl(true);
         playerController.DisableAttack(true);
 
@@ -176,10 +176,10 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(3);
 
-        doorEnd.IsBlocked = false;
+        doorEnd.IsLocked = false;
         doorEndEmissiveColorChanger.ChangeToEnabledMaterial();
 
-        doorEnd.Open();
+        //doorEnd.Open();
 
         StartCoroutine(WaitAndEnablePlayerControl());
     }

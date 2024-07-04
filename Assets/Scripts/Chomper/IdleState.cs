@@ -6,7 +6,6 @@ public class IdleState : IState
     private float timeToAttack = 2;
     private float attackTimeCount;
 
-
     public IdleState(Chomper chomper)
     {
         this.chomper = chomper;
