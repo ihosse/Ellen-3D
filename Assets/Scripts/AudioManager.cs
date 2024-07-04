@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using static System.TimeZoneInfo;
 
 public class AudioManager : MonoBehaviour
 {
@@ -21,5 +22,20 @@ public class AudioManager : MonoBehaviour
     public void SnapshotTransitionTo(AudioMixerSnapshot snapShot, float transitionTime)
     {
         snapShot.TransitionTo(transitionTime);
+    }
+
+    public void SignalTransitionToCombat()
+    {
+        SnapshotTransitionTo(Combat, 1);
+    }
+
+    public void SignalTransitionToExploration()
+    {
+        SnapshotTransitionTo(Exploration, 1);
+    }
+
+    public void SignalTransitionToAmbience()
+    {
+        SnapshotTransitionTo(Ambience, 1);
     }
 }

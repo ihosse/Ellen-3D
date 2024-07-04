@@ -1,45 +1,29 @@
-using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class Cutscene : MonoBehaviour
 {
     [SerializeField]
-    private AudioManager audioManager;
+    private PlayableDirector cutscene;
 
     [SerializeField]
     private PlayerController playerController;
 
-
-    public void Play() 
+    public void Play()
     {
-        StartCoroutine(WaitAndOpenDoor());
-    }
-    public IEnumerator WaitAndOpenDoor()
-    {
-        yield return new WaitForSeconds(.5f);
-        audioManager.SnapshotTransitionTo(audioManager.Exploration, 1);
+        cutscene.Play();
+        cutscene.stopped += OnCutsceneEnd;
 
         playerController.DisableMovementControl(true);
         playerController.DisableAttack(true);
-
-        yield return new WaitForSeconds(3);
-
-        //doorEnd.IsLocked = false;
-        //doorEndEmissiveColorChanger.ChangeToEnabledMaterial();
-
-        //doorEnd.Open();
-
-        StartCoroutine(WaitAndEnablePlayerControl());
     }
 
-    private IEnumerator WaitAndEnablePlayerControl()
+    private void OnCutsceneEnd(PlayableDirector cutscene)
     {
-        yield return new WaitForSeconds(7);
-        playerController.DisableMovementControl(false);
-
-        //if (playerHasWeapon)
-        //{
-        //    playerController.DisableAttack(false);
-        //}
+        if (this.cutscene = cutscene)
+        {
+            playerController.DisableMovementControl(false);
+            playerController.DisableAttack(false);
+        }
     }
 }

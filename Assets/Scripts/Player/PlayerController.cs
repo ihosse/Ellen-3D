@@ -2,7 +2,9 @@ using StarterAssets;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
-{   
+{
+    public bool HasStaff { get; set; }
+
     private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInput;
     private PlayerAttack playerAttack;
@@ -39,6 +41,9 @@ public class PlayerController : MonoBehaviour
 
     public void DisableAttack(bool disable)
     {
+        if (HasStaff == false)
+            return;
+
         if (playerAttack == null)
             playerAttack = GetComponent<PlayerAttack>();
 
