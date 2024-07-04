@@ -13,7 +13,6 @@ public class Damager : MonoBehaviour
 
     public UnityEvent OnHitSomething;
     public UnityEvent OnHitTarget;
-
     
     private void OnTriggerEnter(Collider other)
     {
