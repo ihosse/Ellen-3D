@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool HasStaff { get; set; }
+    public bool HasStaff { get { return playerAttack.Staff.activeSelf; } }
 
     private ThirdPersonController thirdPersonController;
     private StarterAssetsInputs starterAssetsInput;

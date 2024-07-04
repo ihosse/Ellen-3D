@@ -11,6 +11,9 @@ public class Door : MonoBehaviour
     public bool IsLocked { get; private set; }
 
     [SerializeField]
+    private float cameraDelay = 0;
+
+    [SerializeField]
     private float openDelay = 1;
 
     [SerializeField]
@@ -71,10 +74,12 @@ public class Door : MonoBehaviour
 
     private IEnumerator OpenSequence()
     {
+        yield return new WaitForSeconds(cameraDelay);
+
         playerController.DisableMovementControl(true);
         playerController.DisableAttack(true);
 
-        if(openPriorityCamera != null)
+        if (openPriorityCamera != null)
             openPriorityCamera.MoveToTopOfPrioritySubqueue();
 
         yield return new WaitForSeconds(openDelay);

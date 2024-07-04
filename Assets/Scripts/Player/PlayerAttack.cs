@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public bool CanAttack { get; set; } = true;
+    public GameObject Staff;
+
+    public bool CanAttack { get; set; }
 
     [SerializeField]
     private Collider hitBox;
-
-    [SerializeField]
-    private GameObject staff;
 
     private PlayerAnimations _playerAnimations;
     private StarterAssetsInputs _playerInput;
@@ -24,8 +23,8 @@ public class PlayerAttack : MonoBehaviour
     {
         hitBox.enabled = false;
 
-        if (staff != null)
-            staff.SetActive(false);
+        if (Staff != null)
+            Staff.SetActive(false);
         else
             Debug.LogError("Variable staff has not been assigned");
     }
@@ -49,10 +48,10 @@ public class PlayerAttack : MonoBehaviour
 
     public void EnableStaff()
     {
-        if (staff == null)
+        if (Staff == null)
             return;
 
-       staff.SetActive(true);
+       Staff.SetActive(true);
        CanAttack = true;
        hitBox.enabled = false;
     }
