@@ -29,7 +29,7 @@ public class AttackState : IState
         if (CheckIfAttackAnimationEnded())
         {
             chomper.Animator.SetBool("Attack", false);
-            chomper.StateMachine.TransitionTo(chomper.StateMachine.IdleState);
+            chomper.StateMachine.TransitionTo(chomper.StateMachine.PatrolState);
         }
     }
 

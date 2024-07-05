@@ -5,6 +5,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent), typeof(Animator), typeof(Collider))]
 public class Chomper : MonoBehaviour
 {
+    [SerializeField]
+    private bool startOnIdleState = true;
     [field: SerializeField] public Transform PlayerTarget { get; private set; }
     [field: SerializeField] public Transform[] PatrolDestinations { get; private set; }
 
@@ -36,7 +38,11 @@ public class Chomper : MonoBehaviour
     private void Start()
     {
         StateMachine = new StateMachine(this);
-        StateMachine.Initialize(StateMachine.IdleState);
+
+        if(startOnIdleState)
+            StateMachine.Initialize(StateMachine.IdleState);
+        else
+            StateMachine.Initialize(StateMachine.PatrolState);
     }
    
     private void Update()

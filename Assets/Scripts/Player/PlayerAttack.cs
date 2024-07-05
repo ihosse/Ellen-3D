@@ -9,6 +9,9 @@ public class PlayerAttack : MonoBehaviour
     public bool CanAttack { get; set; }
 
     [SerializeField]
+    private bool startWithStaff = false;
+
+    [SerializeField]
     private Collider hitBox;
 
     private PlayerAnimations _playerAnimations;
@@ -27,6 +30,9 @@ public class PlayerAttack : MonoBehaviour
             Staff.SetActive(false);
         else
             Debug.LogError("Variable staff has not been assigned");
+
+        if(startWithStaff)
+            EnableStaff();
     }
     public void Initialize(PlayerAnimations animations, ThirdPersonController thirdPerson)
     {
@@ -69,8 +75,6 @@ public class PlayerAttack : MonoBehaviour
                 attackNumber = Random.Range(2, 5);
                 _playerAnimations.Animator.SetInteger(_playerAnimations.AnimIDAttack, attackNumber);
             }
-            hitBox.enabled = true;
-
             isAttacking = true;
             _thirdPersonController.DisableMovementControl(true);
 
@@ -80,9 +84,14 @@ public class PlayerAttack : MonoBehaviour
 
     private IEnumerator WaitToAttackAnimationEnd()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.2f);
+        hitBox.enabled = true;
+
+        yield return new WaitForSeconds(.3f);
+        //0 create transition to movement Blend Tree
         _playerAnimations.Animator.SetInteger(_playerAnimations.AnimIDAttack, 0);
         
+
         yield return new WaitForSeconds(.1f);
         _playerInput.attack = false;
         isAttacking = false;

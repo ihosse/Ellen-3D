@@ -1,4 +1,6 @@
-﻿public class StateMachine
+﻿using UnityEngine;
+
+public class StateMachine
 {
     public IState CurrentState { get; private set; }
 
@@ -30,6 +32,7 @@
         CurrentState.Exit();
         CurrentState = nextState;
         nextState.Enter();
+        Debug.Log(nextState.ToString());
     }
 
     public void Update()
