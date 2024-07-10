@@ -99,7 +99,9 @@ namespace Ellen3DFinal
             isAttacking = false;
             hitBox.enabled = false;
 
-            _thirdPersonController.DisableMovementControl(false);
+
+            if(CanAttack)
+                _thirdPersonController.DisableMovementControl(false);
         }
 
         public void MeleeAttackStart()

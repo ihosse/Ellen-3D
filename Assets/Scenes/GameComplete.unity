@@ -6030,6 +6030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutscene: {fileID: 66179707}
   playerController: {fileID: 826525047}
+  isLastLevelCutscene: 0
 --- !u!1001 &460179360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16763,6 +16764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutscene: {fileID: 1553692673}
   playerController: {fileID: 826525047}
+  isLastLevelCutscene: 0
 --- !u!4 &1420853809 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3759874570695322122, guid: 1a720fce6a933fd4994901305c9bd5d9,
@@ -20700,6 +20702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutscene: {fileID: 519113863}
   playerController: {fileID: 826525047}
+  isLastLevelCutscene: 1
 --- !u!4 &1703148281
 Transform:
   m_ObjectHideFlags: 0
@@ -21598,7 +21601,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1794167034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21613,6 +21616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutscene: {fileID: 1553692673}
   playerController: {fileID: 826525047}
+  isLastLevelCutscene: 0
 --- !u!4 &1794167035
 Transform:
   m_ObjectHideFlags: 0

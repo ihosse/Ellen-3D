@@ -76,8 +76,9 @@ namespace Ellen3DFinal
 
         private IEnumerator OpenSequence()
         {
-            playerController.DisableMovementControl(true);
+
             playerController.DisableAttack(true);
+            playerController.DisableMovementControl(true);
 
             yield return new WaitForSeconds(cameraDelay);
 

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -11,13 +12,18 @@ namespace Ellen3DFinal
         [SerializeField]
         private PlayerController playerController;
 
+        [SerializeField]
+        private bool isLastLevelCutscene = false;
+
         public void Play()
         {
             cutscene.Play();
-            cutscene.stopped += OnCutsceneEnd;
 
             playerController.DisableMovementControl(true);
             playerController.DisableAttack(true);
+
+            if (!isLastLevelCutscene)
+                cutscene.stopped += OnCutsceneEnd;
         }
 
         private void OnCutsceneEnd(PlayableDirector cutscene)
