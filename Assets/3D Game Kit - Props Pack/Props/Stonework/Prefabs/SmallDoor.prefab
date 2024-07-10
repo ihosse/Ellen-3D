@@ -15,11 +15,9 @@ GameObject:
   - component: {fileID: 383424738730453279}
   - component: {fileID: 108915033063233716}
   - component: {fileID: 6106817803596100918}
-  - component: {fileID: 8501035942867084181}
-  - component: {fileID: 7443773885732129011}
   - component: {fileID: 4601561400479542483}
   m_Layer: 0
-  m_Name: SmallDoor
+  m_Name: SmallDoorFinal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,7 +139,7 @@ AudioSource:
   m_GameObject: {fileID: 6757257882380663721}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -6936760559215168054, guid: 3c13f9c5df039b8489417871952d5cbf,
+  OutputAudioMixerGroup: {fileID: -2582668018650751159, guid: 3c13f9c5df039b8489417871952d5cbf,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 6a87f3a45f97b4b29b8356bbd8c7288f, type: 3}
   m_PlayOnAwake: 0
@@ -241,87 +239,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a45291dc06dfab4fb410216192a0d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnStartOpen:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4603970026562608303}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 8501035942867084181}
-        m_TargetAssemblyTypeName: ChangePriorityCamera, Assembly-CSharp
-        m_MethodName: Change
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 108915033063233716}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  OnFinishOpenning:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7443773885732129011}
-        m_TargetAssemblyTypeName: ChangePriorityCamera, Assembly-CSharp
-        m_MethodName: Change
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  timeToFinish: 3
---- !u!114 &8501035942867084181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6757257882380663721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c7f00289463b414aac9e5f65984fd16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  topPriorityCamera: {fileID: 0}
---- !u!114 &7443773885732129011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6757257882380663721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c7f00289463b414aac9e5f65984fd16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  topPriorityCamera: {fileID: 0}
+  <IsLocked>k__BackingField: 0
+  cameraDelay: 2
+  openDelay: 2
+  timeToEnablePlayer: 5
+  audioManager: {fileID: 0}
+  playerController: {fileID: 0}
+  particle: {fileID: 6181941689990581697}
+  openPriorityCamera: {fileID: 0}
+  openSnapshot: {fileID: -1909365894552140573, guid: 3c13f9c5df039b8489417871952d5cbf,
+    type: 2}
+  audioFx: {fileID: 8300000, guid: 6a87f3a45f97b4b29b8356bbd8c7288f, type: 3}
+  closePriorityCamera: {fileID: 0}
 --- !u!114 &4601561400479542483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,7 +291,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2874065910767420570}
@@ -496,6 +425,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2407609476314563214, guid: a58c39cf6e510024bbfaa6d4908d7655,
         type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2407609476314563214, guid: a58c39cf6e510024bbfaa6d4908d7655,
+        type: 3}
       propertyPath: ShapeModule.type
       value: 5
       objectReference: {fileID: 0}
@@ -557,7 +491,7 @@ PrefabInstance:
     - target: {fileID: 5424499431355864032, guid: a58c39cf6e510024bbfaa6d4908d7655,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5999248326691851221, guid: a58c39cf6e510024bbfaa6d4908d7655,
         type: 3}
@@ -620,9 +554,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8404604376979148623}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4603970026562608303 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5424499431355864032, guid: a58c39cf6e510024bbfaa6d4908d7655,
+--- !u!198 &6181941689990581697 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2407609476314563214, guid: a58c39cf6e510024bbfaa6d4908d7655,
     type: 3}
   m_PrefabInstance: {fileID: 8404604376979148623}
   m_PrefabAsset: {fileID: 0}
